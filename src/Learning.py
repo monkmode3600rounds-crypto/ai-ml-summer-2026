@@ -1,7 +1,12 @@
-import pandas as pd
+Quantity_greater_than_0=df[df['Quantity']>0]
+def Is_High_Sales(row):
+    if row['Sales']> 499:
+        return 'Yes'
+    else:
+        return 'No'
 
-data = {'name': ['Alice', 'Bob'], 'age': [25, 30]}
-df = pd.DataFrame(data)
+Quantity_greater_than_0['HighSales']=Quantity_greater_than_0.apply(Is_High_Sales, axis=1)
 
-# 這行會觸發 KeyError
-print(df['wrong_column'])
+Coutry_Sales=Quantity_greater_than_0.groupby('Country')['Sales'].mean().reset_index()
+Coutry_Sales=Coutry_Sales.sort_values(by='Sales', ascending=False)
+Coutry_Sales.head()
