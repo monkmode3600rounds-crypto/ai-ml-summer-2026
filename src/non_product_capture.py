@@ -27,14 +27,15 @@ def results(set1, set2):
 def fuzz_catcher(cands):
     matches_dict={}
     for notes in notes_dict:
-        notes_dict[notes] = list(map(normalize_text, notes_dict[notes])) #do it outside maybe in the each of the notes
+        #do it outside maybe in the each of the notes
         matches_dict[notes] = [
             (c, process.extractOne(c, notes_dict[notes], scorer=fuzz.partial_ratio)) # problem here c is checking a limited note 
             for c in cands
         ]
         print(f"The matchables for {notes} are : {matches_dict[notes]}")
     return matches_dict
-    
+
+#Turns a dictionary into an ordinary list 
 def raw_list_converter(a):
     raw=[]
     for type in a.keys():
@@ -85,7 +86,7 @@ print(f'Things only_mask1_5 have: {b}')
 #checking the results of each method:
 
 cands1 = df.loc[~mask, 'Desc_norm'].value_counts().index[:1000] #Fuzz masked never catches things that mask 1 already have 
-cands1_5 = df.loc[~mask1_5, 'Desc_norm'].value_counts().index[:1000] #Fuzz maks never catches things that mask 1_5 already have
+cands1_5 = df.loc[~mask1_5, 'Desc_norm'].value_counts().index[:1000] #Fuzz mask never catches things that mask 1_5 already have
 
 raw_cands1=raw_list_converter(fuzz_catcher(cands1))
 raw_cands1_5=raw_list_converter(fuzz_catcher(cands1_5))
