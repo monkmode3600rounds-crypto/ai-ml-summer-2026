@@ -29,19 +29,32 @@ def check_display(text):
 
 print('Check number 1')
 pattern = re.compile(
-    r'\bdisplay\b(?!\s*(?:box|case|stand)\b)',  # display 後面不是 box/case/stand/only (problem here )
+    r'\bdisplay\b(?!\s*(?:box|case|tray|carton|crate)\b)',  # display 後面不是 box/case/stand/only (problem here )
     re.IGNORECASE
 ) # what is * in regex?
 
-test_cases = [
-    "crystal stud earrings clear display",   # 應該不算 operational（display 前是 clear，形容包裝）
-    "robot mug in display box",               # display box → 排除
-    "sample for display only",                # display only → 這個才是真正 operational
-    "shop display item",   
-    "Camera display stand for display only" 
-    "Display only toy truck"  
-    "Only display "                                 # shop display → operational
-]
+test_cases=['robot mug in display box', 
+'marvel mini hulk buster in display case 50mm x 50mm',
+'home use display stand',
+'Xiaomi note 17 for display only',
+'camera display stand for display only',
+"robot mug in display box",  
+
+'cleaning the display',
+'liquid display',
+'Retina display',
+'Asus 240 Hz display',
+
+"crystal stud earrings clear display",             
+"sample for display only",                
+"shop display item",
+"Display only toy truck" , # some problem for here 
+"shop display Studio display",  
+"for display Cover display",     
+"LED display shop display",
+"Cover display for display"]
+
+# high probability words (first may be )]
 #test case enhancement
 is_product_dict={}
 
@@ -55,13 +68,7 @@ print()
 print(dataframe(is_product_dict))
 print("-"*30)
 
-
 print("Check number 2")
-
-
-
-
-
 
 false_keys = {k for k, v in is_product_dict.items() if not v}
 for k in false_keys:
